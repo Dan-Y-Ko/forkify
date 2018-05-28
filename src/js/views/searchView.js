@@ -8,6 +8,26 @@ export const clearResults = () =>
     elements.searchResPages.innerHTML = '';
 };
 
+export const highlightSelected = id =>
+{
+    const resultsArr = Array.from(document.querySelectorAll('.results__link'));
+    
+    resultsArr.forEach(el =>
+    {
+        el.classList.remove('results__link--active');
+    });
+
+    document.querySelector(`a[href="#${id}"]`).classList.add('results__link--active');
+};
+
+/*
+    Pasta with tomato and spinach
+acc: 0 --> acc + curr.length = 5 --> 5 < 17 --> newTitle = ['Pasta']
+acc: 5 --> acc + curr.length = 9 --> 9 < 17 --> newTitle = ['Pasta', 'with']
+acc: 9 --> acc + curr.length = 15 --> 15 < 17 --> newTitle = ['Pasta', 'with', 'tomato']
+acc: 15 --> acc + curr.length = 18 --> 18 > 17 --> newTitle = ['Pasta', 'with', 'tomato']
+acc: 18 --> acc + curr.length = 24 --> 24 > 17 --> newTitle = ['Pasta', 'with', 'tomato']
+*/
 const limitRecipeTitle = (title, limit=17) =>
 {
     const newTitle = [];
