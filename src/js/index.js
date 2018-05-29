@@ -194,8 +194,6 @@ window.l = new List();
 /****************************************************/
 /* Likes Controller                                */
 /****************************************************/
-state.likes = new Likes();
-likesView.toggleLikeMenu(state.likes.getNumLikes());
 const controlLike = () =>
 {
     if (!state.likes)
@@ -237,3 +235,18 @@ const controlLike = () =>
 
     likesView.toggleLikeMenu(state.likes.getNumLikes());
 }
+
+// restore liked recipes on page load
+window.addEventListener('load', () =>
+{
+    state.likes = new Likes();
+
+    // restore likes
+    state.likes.readStorage();
+
+    // toggle like menu button
+    likesView.toggleLikeMenu(state.likes.getNumLikes());
+
+    // render the existing likes
+    state.likes.likes.forEach(like => likesView.renderLike(like));
+});
